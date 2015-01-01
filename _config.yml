@@ -1,0 +1,15 @@
+name: GM's Blog
+description: 打造跨界前端攻城师
+meta_description: "web前端，用户体验，程序猿，编程"
+
+markdown: redcarpet
+highlighter: pygments
+logo: false
+paginate: 15
+baseurl: /
+domain_name: 'http://ygm125.github.io'
+google_analytics: 'UA-XXXXXXXX-X'
+
+# Details for the RSS feed generator
+url:            'ygm125.github.io'
+author:         'GM'
