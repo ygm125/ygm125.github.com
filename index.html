@@ -1,11 +1,11 @@
 ---
 layout: default
 title: Home
-cover: /assets/images/b4.jpg
+cover: true
 about: 'about.html'
 ---
 
-<header class="main-header {% if page.cover %}" style="background-image: url({{ page.cover }});height:45%;{%else%}no-cover{% endif %}">
+<header class="main-header {% if page.cover %}" style="height:45%;{%else%}no-cover{% endif %}">
     <nav class="main-nav overlay clearfix">
             {% if page.logo %}
                 <a class="blog-logo" href="{{ site.baseurl }}">
