@@ -1,0 +1,109 @@
+---
+layout: post
+title:  "一个简单的滚动加载插件"
+categories: js
+---
+
+内容没多少，直接上代码吧
+
+```javascript
+
+(function(){
+
+var defConf = {
+    scrollThresholdTime : 100,
+    scrollThresholdVal : 100,
+    firstRequest : true
+}
+
+var PENDING = 0;
+
+function Waterfall(conf) {
+    this.conf = $.extend(defConf,conf);
+    this.init();
+}
+
+Waterfall.prototype = {
+    init : function(){
+    	var that = this;
+      	this.pullCount = 0;
+        this.listerEvents();
+        if(this.conf.firstRequest){
+            setTimeout(function(){
+                that.drawUI();
+            });
+        }
+    },
+    on : function(evt,cb){
+    	$(this).on(evt,cb);
+    },
+    trigger : function(evt){
+    	$(this).trigger(evt);
+    },
+    off : function(evt){
+    	$(this).off(evt);
+    },
+    listerEvents : function(){
+        var that = this , $win = $(window) , $doc = $(document);
+        $win.scroll(this.throttle(function(e){
+            var ws = $win.scrollTop(),
+                wh = $win.height(),
+                dh = $doc.height();
+            if(dh - (wh + ws) < that.conf.scrollThresholdVal){
+                that.drawUI();
+            }
+        }));
+
+        this.on('requestDataStart',function(){
+             PENDING =  1;
+             this.pullCount++;
+        });
+
+        this.on('requestDataEnd',function(){
+             PENDING =  0;
+        });
+    },
+    drawUI : function(){
+        if(!PENDING){
+            this.trigger('requestDataStart');
+        }
+    },
+    throttle: function(fun) {
+        var t, ms = this.conf.scrollThresholdTime;
+        return function() {
+            var that = this,
+                arg = arguments;
+            clearTimeout(t), t = setTimeout(function() {
+                fun.apply(that, arg)
+            }, ms);
+        }
+    }
+}
+
+window.Waterfall = Waterfall;
+
+})();
+```
+
+如何使用？
+
+```javascript
+var requestData = function(next){
+	//....
+	console.log(wfIns.pullCount);
+	next();
+}
+var wfIns = new Waterfall();
+wfIns.on('requestDataStart',function(){
+	requestData(function(){
+		wfIns.trigger('requestDataEnd');
+	});
+});
+
+```
+
+打完收工 ==#
+
+
+
+

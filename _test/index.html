@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <script src="http://s0.qhimg.com/lib/jquery/183.js" ></script>
+    <style>
+        *{margin:0;padding: 0;}
+ 
+        .waterfall{
+            border: 1px solid blue;
+        }
+    </style>
+</head>
+<body style="height:500px">
+    <div id="waterfall">
+         
+    </div>
+ 
+    <script>
+ 
+    (function(){
+
+var defConf = {
+    scrollThresholdTime : 100,
+    scrollThresholdVal : 100,
+    firstRequest : true
+}
+
+var PENDING = 0;
+
+function Waterfall(conf) {
+    this.conf = $.extend(defConf,conf);
+    this.init();
+}
+
+Waterfall.prototype = {
+    init : function(){
+        var that = this;
+        this.pullCount = 0;
+        this.listerEvents();
+        if(this.conf.firstRequest){
+            setTimeout(function(){
+                that.drawUI();
+            });
+        }
+    },
+    on : function(evt,cb){
+        $(this).on(evt,cb);
+    },
+    trigger : function(evt){
+        $(this).trigger(evt);
+    },
+    off : function(evt){
+        $(this).off(evt);
+    },
+    listerEvents : function(){
+        var that = this , $win = $(window) , $doc = $(document);
+        $win.scroll(this.throttle(function(e){
+            var ws = $win.scrollTop(),
+                wh = $win.height(),
+                dh = $doc.height();
+            if(dh - (wh + ws) < that.conf.scrollThresholdVal){
+                that.drawUI();
+            }
+        }));
+
+        this.on('requestDataStart',function(){
+             PENDING =  1;
+             this.pullCount++;
+        });
+
+        this.on('requestDataEnd',function(){
+             PENDING =  0;
+        });
+    },
+    drawUI : function(){
+        if(!PENDING){
+            this.trigger('requestDataStart');
+        }
+    },
+    throttle: function(fun) {
+        var t, ms = this.conf.scrollThresholdTime;
+        return function() {
+            var that = this,
+                arg = arguments;
+            clearTimeout(t), t = setTimeout(function() {
+                fun.apply(that, arg)
+            }, ms);
+        }
+    }
+}
+
+window.Waterfall = Waterfall;
+
+})();
+         
+var requestData = function(cb){
+    $('body').height($('body').height()+200);
+    cb();
+}
+
+var wfIns = new Waterfall();
+
+wfIns.on('requestDataStart',function(e){
+    console.log(this.pullCount);
+
+    requestData(function(){
+        //....
+        wfIns.trigger('requestDataEnd');
+    });
+});
+ 
+    </script>
+</body>
+</html>
