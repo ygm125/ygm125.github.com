@@ -1,0 +1,50 @@
+---
+layout: post
+title:  "小巧的模块加载器"
+categories: js
+---
+
+抽空也写了个模块加载器，代码量200行左右
+
+有兴趣的可以去git地址围观，[传送门](https://github.com/ygm125/loader)
+
+下面看下如何使用
+
+页面中引入模块加载器`load.js`，需要什么直接require即可，如
+
+```javascript
+
+require(['a','b'],function(a,b){
+    console.log(a,b);
+});
+
+```
+
+加载模块的路径以`load.js`所在的路径为准，可以设置自定义属性`data-baseurl`指定。
+
+模块的写法也大同小异，如
+
+`a.js`
+
+```javascript
+
+define(['c'],function(c) {
+    console.log("iam a, deps c");
+});
+
+```
+`c.js`
+
+```javascript
+
+define(function() {
+    console.log("iam c,no deps");
+    return {"c":"c"};
+});
+
+```
+
+想返回什么return什么就好。
+
+具体的一个[demo](/test/loader/load.html)地址，请查看源码和控制台。
+
