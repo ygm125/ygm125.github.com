@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "记录下容易忘的命令"
+title:  "放些容易忘的命令"
 categories: linux
 ---
 
