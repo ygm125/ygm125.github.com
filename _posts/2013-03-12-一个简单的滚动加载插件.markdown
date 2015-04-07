@@ -37,7 +37,7 @@ Waterfall.prototype = {
     on : function(evt,cb){
     	$(this).on(evt,cb);
     },
-    trigger : function(evt){
+    emit : function(evt){
     	$(this).trigger(evt);
     },
     off : function(evt){
@@ -65,7 +65,7 @@ Waterfall.prototype = {
     },
     drawUI : function(){
         if(!PENDING){
-            this.trigger('requestDataStart');
+            this.emit('requestDataStart');
         }
     },
     throttle: function(fun) {
@@ -96,7 +96,7 @@ var requestData = function(next){
 var wfIns = new Waterfall();
 wfIns.on('requestDataStart',function(){
 	requestData(function(){
-		wfIns.trigger('requestDataEnd');
+		wfIns.emit('requestDataEnd');
 	});
 });
 
