@@ -105,7 +105,7 @@ Item.getRowNums是Item里加的一个静态方法
     if(this.props.loding){
       return (
         <Group>
-          <Text style=\{\{width:this.props.width,height:30,textAlign:'center' } }>loding...</Text>
+          <Text style= { { width:this.props.width,height:30,textAlign:'center' } }>loding...</Text>
         </Group>
       )
     }
