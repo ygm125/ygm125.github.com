@@ -1,4 +1,8 @@
-基于canvas的瀑布流
+---
+layout: post
+title:  "基于canvas的瀑布流"
+categories: js
+---
 
 今年比较火的无疑是react了，官网地址 [http://facebook.github.io/react/](http://facebook.github.io/react/)
 
