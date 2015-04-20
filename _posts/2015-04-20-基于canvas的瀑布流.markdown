@@ -55,6 +55,7 @@ ListView的numberOfItemsGetter数也是写死的，
         	rowData.push(data[itemIndex + i]);
    	 	};
 
+      //loding相关
     	if(itemIndex + 1 === this.getNumberOfItems()){
         	var loding = true;
     	}
@@ -100,10 +101,11 @@ Item.getRowNums是Item里加的一个静态方法
         );
     });
 
+    //loding相关
     if(this.props.loding){
       return (
         <Group>
-          <Text style={{width:this.props.width,height:30,textAlign:'center'}}>loding...</Text>
+          <Text style=\{\{width:this.props.width,height:30,textAlign:'center'\}\}>loding...</Text>
         </Group>
       )
     }
@@ -206,7 +208,7 @@ listViewIns.scroller.setDimensions 做了一个区域的限制，也就是没数
 最后补上例子代码地址 [传送门](https://github.com/ygm125/react-canvas/tree/master/examples/waterfall)
 
 
-good night~
+good job~
 
 
 
