@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "基于canvas的瀑布流"
+title:  "基于react-canvas的瀑布流实现"
 categories: js
 ---
 
